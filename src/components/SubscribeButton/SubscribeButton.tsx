@@ -1,5 +1,9 @@
 import styles from './style.module.scss';
-const SubscribeButton = () => {
+
+interface SubscriptionProrps {
+	id: number;
+}
+const SubscribeButton = ({ id }: SubscriptionProrps) => {
 	return <button className={styles.subscribeButton}>Subscribe Now</button>;
 };
 
