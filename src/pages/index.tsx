@@ -1,9 +1,18 @@
 import Head from 'next/head';
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import { Hero } from '../components';
 import styles from '../styles/home.module.scss';
 import { stripe } from '../services/stripe';
 import formatToCurrency from '../utils/formatCurrency';
+
+// Client-side - Quando não precisa se de SEO
+// Server-side - Quando precisa de dados dinamico do usuário e contexto da requisição - Mais processamento que client side
+// Static Site Generation - Home do Blog, Post do blog, Pagina de produto, categoria, necessita indexação, o que é igual para todo mundo
+
+// Post do blog
+
+// Conteudo - SSG
+// Comentarios - Client Side
 
 interface HomeProps {
 	product: {
@@ -12,7 +21,7 @@ interface HomeProps {
 	};
 }
 
-export default function Home({ product }) {
+export default function Home({ product }: HomeProps) {
 	return (
 		<>
 			<Head>
@@ -26,7 +35,7 @@ export default function Home({ product }) {
 	);
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
 	const price = await stripe.prices.retrieve('price_1KZgPaHM0zDadpvBWLzc5nrk', {
 		expand: ['product'],
 	});
@@ -39,5 +48,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
 		props: {
 			product,
 		},
+		revalidate: 60 * 60 * 24, // 24 hours
 	};
 };

@@ -15,7 +15,7 @@ const Hero = ({ price, priceId }: HeroProps) => {
 			</h1>
 			<p>
 				Get access to all the publications <br />
-				<span>for R$ {price} per month</span>
+				<span>for {price} per month</span>
 			</p>
 			<SubscribeButton id={priceId} />
 		</section>
