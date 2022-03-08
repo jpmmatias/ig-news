@@ -25,7 +25,6 @@ const SubscribeButton = ({ id }: SubscriptionProrps) => {
 		try {
 			const response = await api.post('/subscribe');
 			const { sessionId } = response.data;
-			console.log(sessionId);
 			const stripe = await getStripeJS();
 
 			stripe.redirectToCheckout({ sessionId });
