@@ -1,8 +1,9 @@
 import styles from './style.module.scss';
-import { useSession } from 'next-auth/react';
+import { useSession, getSession } from 'next-auth/react';
 import { signIn } from 'next-auth/react';
 import { api } from '../../services/api';
 import { getStripeJS } from '../../services/stripe-js';
+import { useRouter } from 'next/router';
 
 // Para informações secretas - como secrets de apis
 // getServerSideProps (SSR)
@@ -14,11 +15,16 @@ interface SubscriptionProrps {
 }
 const SubscribeButton = ({ id }: SubscriptionProrps) => {
 	const { data: session } = useSession();
+	const router = useRouter();
 	const userNotLogged = !session;
-
+	console.log(session);
 	async function handleSubscribe() {
 		if (userNotLogged) {
 			signIn('github');
+			return;
+		}
+		if (session.activeSubscription !== null) {
+			router.push('/posts');
 			return;
 		}
 
