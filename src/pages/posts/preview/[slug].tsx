@@ -20,7 +20,7 @@ const PostPreview = ({ post }: PostPreviewPros) => {
 		if (!session?.activeSubscription) {
 			router.push(`/posts/${post.slug}`);
 		}
-	}, [session]);
+	}, [session, post, router]);
 
 	return (
 		<>
@@ -50,10 +50,13 @@ const PostPreview = ({ post }: PostPreviewPros) => {
 
 export default PostPreview;
 
-export const getStaticPaths = () => {
+export const getStaticPaths = async () => {
 	return {
 		paths: [],
 		fallback: 'blocking',
+		//true - Se alguem tentar acessar um post que não gerado de forma estatica - Não é bom pra ceo
+		// false  - se não foi gerado de forma estatica ainda, da um 404
+		// blocking - só mostra o html quando ele foi gerado - quando pode surgir novos conteudos
 	};
 };
 
@@ -78,5 +81,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 	return {
 		props: { post },
+		redirect: 60 * 30, // 30 minutos
 	};
 };
