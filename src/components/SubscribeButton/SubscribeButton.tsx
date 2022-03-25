@@ -13,17 +13,16 @@ import { useRouter } from 'next/router';
 interface SubscriptionProrps {
 	id: string;
 }
-const SubscribeButton = ({ id }: SubscriptionProrps) => {
-	const { data: session } = useSession();
+const SubscribeButton = () => {
+	const { data, status } = useSession();
 	const router = useRouter();
-	const userNotLogged = !session;
-	console.log(session);
+	const userNotLogged = status === 'unauthenticated';
 	async function handleSubscribe() {
 		if (userNotLogged) {
 			signIn('github');
 			return;
 		}
-		if (session.activeSubscription !== null) {
+		if (data.activeSubscription !== null) {
 			router.push('/posts');
 			return;
 		}
