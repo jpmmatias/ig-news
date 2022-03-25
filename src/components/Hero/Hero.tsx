@@ -2,7 +2,7 @@ import { SubscribeButton } from '..';
 import styles from './styles.module.scss';
 
 interface HeroProps {
-	price: number;
+	price: number | string;
 	priceId: string;
 }
 
@@ -17,7 +17,7 @@ const Hero = ({ price, priceId }: HeroProps) => {
 				Get access to all the publications <br />
 				<span>for {price} per month</span>
 			</p>
-			<SubscribeButton id={priceId} />
+			<SubscribeButton />
 		</section>
 	);
 };

@@ -17,7 +17,7 @@ import formatToCurrency from '../utils/formatCurrency';
 interface HomeProps {
 	product: {
 		priceId: string;
-		amount: number;
+		amount: number | string;
 	};
 }
 
@@ -44,6 +44,7 @@ export const getStaticProps: GetStaticProps = async () => {
 		priceId: price.id,
 		amount: formatToCurrency(price.unit_amount / 100),
 	};
+
 	return {
 		props: {
 			product,
